@@ -5,7 +5,7 @@ create table customer (first_name varchar(20), last_name varchar (20)  , email  
 
 
 
-create table station ( departure_time  time, arrival_time  time , id  varchar(20) primary key , name varchar(30) , state varchar(20) );
+create table station ( id  varchar(20) primary key , name varchar(30) , state varchar(20) );
 create table transitline ( fare  float , name varchar (30) primary key , departure_time  time , arrival_time time , travel_time  float , num_stops  int , origin  varchar (30) not null , destination  varchar (30) not null ,
 foreign key (origin) references station (id)  ,
 foreign key (destination) references station (id)  ) ;
