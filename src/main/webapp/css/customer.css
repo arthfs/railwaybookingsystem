@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/* Reset all table styles */
+table, tr, td, th {
+    background-color: transparent !important;
+    
+    
+    
+}
+
+th{
+	border-style: solid;
+	border-width:2px;
+	width:150px;
+	text-align:center;
+	margin-bottom:50px;
+}
+
+td{
+	
+	width:150px;
+	text-align:center;
+	border:none;
+	margin:30px;
+}
