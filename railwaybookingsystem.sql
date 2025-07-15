@@ -24,7 +24,7 @@ create table manager (ssn varchar (10) primary key, lastname  varchar(30), first
 create table questions (id int primary key auto_increment, question varchar (500), customer varchar (20),customer_service varchar (10) , foreign key (customer) references customer (username) , foreign key (customer_service) references customer_service (ssn));
 
 insert into customer values('Max' ,'Pierre','maxpierre@gmail.com', "1998-03-19", false, 'mp112','qaz12');
-insert into customer_service (ssn, lastname, first_name, username, password) VALUES ('111223333', 'Smith', 'John', 'jsmith', 'service123');
+insert into customer_service (ssn, last_name, first_name, username, password) VALUES ('111223333', 'Smith', 'John', 'jsmith', 'service123');
 insert into customer_service values ('2345678901', 'Johnson', 'Michael', 'mjohnson_cs', 'helpdesk456'), ('3456789012', 'Williams', 'Sarah', 'swilliams_cs', 'support789'), ('4567890123', 'Brown', 'David', 'dbrown_cs', 'assist2023'),
 ('5678901234', 'Davis', 'Emily', 'edavis_cs', 'csrep!2024');
 insert into manager (ssn, lastname, first_name, username, password) VALUES ('999887777', 'Johnson', 'Lisa', 'ljohnson', 'manage123');
