@@ -47,7 +47,7 @@ public class question extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
         String root_username = "root"; 
-        String root_password = "Freestyle99+-"; 
+        String root_password = ""; 
         HttpSession session = request.getSession();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
