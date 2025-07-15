@@ -52,7 +52,7 @@ public class customer extends HttpServlet {
 	            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
 	            String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
 	            String root_username = "root"; 
-	            String root_password = "Freestyle99+-"; 
+	            String root_password = ""; 
 	            Connection conn = DriverManager.getConnection(url, root_username, root_password);
 	            Statement st = conn.createStatement();
 	            HttpSession session = request.getSession();
@@ -113,7 +113,7 @@ public class customer extends HttpServlet {
 		            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
 		            String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
 		            String root_username = "root"; 
-		            String root_password = "Freestyle99+-"; 
+		            String root_password = ""; 
 		            Connection conn = DriverManager.getConnection(url, root_username, root_password);
 		            Statement st = conn.createStatement();
 		            HttpSession session = request.getSession();
@@ -162,7 +162,7 @@ public class customer extends HttpServlet {
 
         String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
         String root_username = "root"; 
-        String root_password = "Freestyle99+-"; 
+        String root_password = ""; 
         HttpSession session = request.getSession();
         //String username = request.getParameter("username") , password = request.getParameter("password");
         try {
