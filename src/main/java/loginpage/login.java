@@ -51,7 +51,11 @@ public class login extends HttpServlet {
 
         String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
         String root_username = "root"; 
+<<<<<<< HEAD
         String root_password = "Freestyle99+-"; 
+=======
+        String root_password = ""; 
+>>>>>>> 51313782a3728c5270b811165b13f7c36e5867c9
         HttpSession session = request.getSession();
         String username = request.getParameter("username") , password = request.getParameter("password");
         try {

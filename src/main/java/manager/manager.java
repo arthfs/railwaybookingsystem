@@ -42,7 +42,11 @@ public class manager extends HttpServlet {
 
         String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
         String root_username = "root"; 
+<<<<<<< HEAD
         String root_password = "Freestyle99+-"; 
+=======
+        String root_password = ""; 
+>>>>>>> 51313782a3728c5270b811165b13f7c36e5867c9
         HttpSession session = request.getSession();
         
 		String action = request.getParameter("action");
@@ -54,7 +58,11 @@ public class manager extends HttpServlet {
 			
 			try 
 			   {   
+<<<<<<< HEAD
 				    Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+=======
+			   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+>>>>>>> 51313782a3728c5270b811165b13f7c36e5867c9
 		            Connection conn = DriverManager.getConnection(url, root_username, root_password);
 		            Statement st = conn.createStatement();
 		            int rs = st.executeUpdate   ("update  customer_service set first_name ='"+ first_name+"', last_name ='"+ last_name+ "', username ='"+ username+ "'," +" password ='"+ password+ "'," +"ssn ='"+ ssn+ "' where ssn='"
@@ -89,7 +97,11 @@ public class manager extends HttpServlet {
 			//System.out.println("delete");
 			 try 
 			   {   
+<<<<<<< HEAD
 				    Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+=======
+			   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+>>>>>>> 51313782a3728c5270b811165b13f7c36e5867c9
 		            Connection conn = DriverManager.getConnection(url, root_username, root_password);
 		            Statement st = conn.createStatement();
 		            int rs = st.executeUpdate ("delete from customer_service where ssn='"+request.getParameter("ssn")+  "'");
@@ -109,7 +121,11 @@ public class manager extends HttpServlet {
 			
 				   try 
 				   {   
+<<<<<<< HEAD
 					    Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+=======
+				   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
+>>>>>>> 51313782a3728c5270b811165b13f7c36e5867c9
 			            Connection conn = DriverManager.getConnection(url, root_username, root_password);
 			            Statement st = conn.createStatement();
 			            ResultSet rs = st.executeQuery("select * from customer_service");
