@@ -4,24 +4,24 @@ use railwaybookingsystem;
 create table customer (first_name varchar(20), last_name varchar (20)  , email  varchar (30) ,birthdate date, disabled boolean,  username varchar (20) primary key, password varchar(20)  );
 create table station (  id  varchar(20) primary key , name varchar(30) , state varchar(20) );
 create table transitline ( fare  float , name varchar (30) primary key , departure_time  time , arrival_time time , travel_time  float , num_stops  int , origin  varchar (30) not null , destination  varchar (30) not null ,
-foreign key (origin) references station (id)  ,
-foreign key (destination) references station (id)  ) ;
+foreign key (origin) references station (id) on update cascade on delete cascade ,
+foreign key (destination) references station (id) on update cascade on delete cascade  ) ;
 
-create table train (id  varchar(20) primary key, transitline_name  varchar(30), foreign key (transitline_name) references transitline (name)) ;
+create table train (id  varchar(20) primary key, transitline_name  varchar(30), foreign key (transitline_name) references transitline (name) on update cascade on delete cascade) ;
 
-create table reservation ( number  varchar (20) primary key , id_train varchar(20) not null, date  date , total_fare float , type  varchar(20) , username  varchar(20) not null ,transitline_name  varchar(30) not null,
-foreign key (transitline_name) references transitline (name) ,
-foreign key (username) references customer (username) ,
-foreign key (id_train) references train (id) ) ;
+create table reservation ( number int primary key auto_increment , id_train varchar(20) not null, date  date , total_fare float , type  varchar(20) , username  varchar(20) not null ,transitline_name  varchar(30) not null,
+foreign key (transitline_name) references transitline (name) on update cascade on delete cascade ,
+foreign key (username) references customer (username) on update cascade on delete cascade ,
+foreign key (id_train) references train (id) on update cascade on delete cascade ) ;
 
 create table has_stop ( transitline_name varchar (30) , id_station  varchar (20) , stop_fare float , departure_time  time, arrival_time  time,
 primary key (transitline_name, id_station ),
-foreign key (transitline_name) references transitline (name),
-foreign key (id_station) references station (id)) ;
+foreign key (transitline_name) references transitline (name) on update cascade on delete cascade,
+foreign key (id_station) references station (id) on update cascade on delete cascade) ;
 
 create table customer_service (ssn varchar (10) primary key, last_name  varchar(30), first_name varchar(30) , username varchar (20) , password  varchar (30) );
 create table manager (ssn varchar (10) primary key, lastname  varchar(30), first_name  varchar(30) ,username varchar (20) , password  varchar (30) );
-create table questions (id int primary key auto_increment, question varchar (500), customer varchar (20),customer_service varchar (10) , foreign key (customer) references customer (username) , foreign key (customer_service) references customer_service (ssn));
+create table questions (id int primary key auto_increment, question varchar (500),answer varchar(1000), customer varchar (20),customer_service varchar (10) , foreign key (customer) references customer (username) on update cascade on delete cascade , foreign key (customer_service) references customer_service (ssn) on update cascade on delete cascade);
 
 insert into customer values('Max' ,'Pierre','maxpierre@gmail.com', "1998-03-19", false, 'mp112','qaz12');
 insert into customer_service (ssn, last_name, first_name, username, password) VALUES ('111223333', 'Smith', 'John', 'jsmith', 'service123');
@@ -84,7 +84,7 @@ INSERT INTO has_stop VALUES
 ('LibertyLine', 'ST002', 15.0, '09:00', '09:15'),
 ('LibertyLine', 'ST003', 45.0, '10:15', '10:30');
 
-alter table reservation add column origin varchar (20),add column destination varchar(20), add foreign key (origin) references station(id), add foreign key (destination) references station(id);
+alter table reservation add column origin varchar (20),add column destination varchar(20), add foreign key (origin) references station(id) on update cascade on delete cascade, add foreign key (destination) references station(id) on update cascade on delete cascade;
 
 
 
