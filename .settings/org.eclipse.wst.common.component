@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
         
     <wb-module deploy-name="railwaysystem">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
@@ -10,4 +11,27 @@
             
     </wb-module>
     
+=======
+<<<<<<< HEAD
+    <wb-module deploy-name="railwaysystem">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <property name="context-root" value="railwaysystem"/>
+        <property name="java-output-path" value="/railwaysystem/build/classes"/>
+    </wb-module>
+=======
+        
+    <wb-module deploy-name="railwaysystem">
+                
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                
+        <property name="java-output-path" value="/railwaysystem/build/classes"/>
+        <property name="context-root" value="railwaysystem"/>
+            
+    </wb-module>
+    
+>>>>>>> b8782db8184bdcfc6916a1101beb47e1b1d6798a
+>>>>>>> a9e56917e99d990741ef71ccc6ae0a9198e45cfa
 </project-modules>
