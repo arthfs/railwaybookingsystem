@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
+<<<<<<< HEAD
   <fixed facet="java"/>
   <fixed facet="jst.web"/>
   <fixed facet="wst.jsdt.web"/>
+=======
+  <fixed facet="wst.jsdt.web"/>
+  <fixed facet="jst.web"/>
+  <fixed facet="java"/>
+>>>>>>> b8782db8184bdcfc6916a1101beb47e1b1d6798a
   <installed facet="java" version="21"/>
   <installed facet="jst.web" version="5.0"/>
   <installed facet="wst.jsdt.web" version="1.0"/>
