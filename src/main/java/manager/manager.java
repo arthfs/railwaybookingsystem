@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.io.InputStream;
+import java.util.Properties;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -42,12 +43,17 @@ public class manager extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		Properties props = new Properties();
+		try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+		    props.load(input);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
-        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-        String root_username = "root"; 
-        String root_password = "Freestyle99+-"; 
+      
         HttpSession session = request.getSession();
         
 		String action = request.getParameter("action");
@@ -60,7 +66,11 @@ public class manager extends HttpServlet {
 			try 
 			   {   
 			   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-		            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+			   Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		            Statement st = conn.createStatement();
 		            int rs = st.executeUpdate   ("update  customer_service set first_name ='"+ first_name+"', last_name ='"+ last_name+ "', username ='"+ username+ "'," +" password ='"+ password+ "'," +"ssn ='"+ ssn+ "' where ssn='"
 				    +ssn_reference+"'"    );
@@ -95,7 +105,11 @@ public class manager extends HttpServlet {
 			 try 
 			   {   
 			   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-		            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+			   Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		            Statement st = conn.createStatement();
 		            int rs = st.executeUpdate ("delete from customer_service where ssn='"+request.getParameter("ssn")+  "'");
 		            conn.close();
@@ -115,7 +129,11 @@ public class manager extends HttpServlet {
 				   try 
 				   {   
 				   Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-			            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+				   Connection conn = DriverManager.getConnection(
+		            	    props.getProperty("db.url"),
+		            	    props.getProperty("db.user"),
+		            	    props.getProperty("db.password")
+		            	);
 			            Statement st = conn.createStatement();
 			            ResultSet rs = st.executeQuery("select * from customer_service");
 			            int  num_customer_service = 0;
@@ -176,7 +194,11 @@ public class manager extends HttpServlet {
 				   try 
 				   {
 			            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-			            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+			            Connection conn = DriverManager.getConnection(
+			            	    props.getProperty("db.url"),
+			            	    props.getProperty("db.user"),
+			            	    props.getProperty("db.password")
+			            	);
 			            Statement st = conn.createStatement();
 			            ResultSet rs = st.executeQuery("select c.first_name,c.last_name,t1.* from (select r.username,round(sum(r.total_fare),3) total from reservation r  group by r.username) t1 join customer c using(username) where t1.total = (select max(t1.total))");
 			            int num_customer = 0;
@@ -228,7 +250,11 @@ public class manager extends HttpServlet {
 
 				try {
 						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection conn = DriverManager.getConnection(url, root_username, root_password);
+						  Connection conn = DriverManager.getConnection(
+				            	    props.getProperty("db.url"),
+				            	    props.getProperty("db.user"),
+				            	    props.getProperty("db.password")
+				            	);
 						Statement st = conn.createStatement();
 						ResultSet rs;
 
@@ -274,7 +300,11 @@ public class manager extends HttpServlet {
 		if (action.compareTo("active") == 0) {
 		    try {
 		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        Connection conn = DriverManager.getConnection(url, root_username, root_password);
+		        Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		        
 		   
 		        String month = request.getParameter("month");
@@ -361,7 +391,11 @@ public class manager extends HttpServlet {
 		if (action.compareTo("sales") == 0) {
 		    try {
 		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        Connection conn = DriverManager.getConnection(url, root_username, root_password);
+		        Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		        
 		    
 		        String year = request.getParameter("year");
@@ -445,7 +479,11 @@ public class manager extends HttpServlet {
 
 				try {
 						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection conn = DriverManager.getConnection(url, root_username, root_password);
+						  Connection conn = DriverManager.getConnection(
+				            	    props.getProperty("db.url"),
+				            	    props.getProperty("db.user"),
+				            	    props.getProperty("db.password")
+				            	);
 						Statement st = conn.createStatement();
 						ResultSet rs;
 

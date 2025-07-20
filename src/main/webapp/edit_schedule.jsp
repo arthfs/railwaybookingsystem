@@ -1,16 +1,26 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.InputStream, java.util.Properties" %>
 <%
     String name = request.getParameter("name");
 
-    String url = "jdbc:mysql://localhost:3306/railwaybookingsystem";
-    String user = "root";
-    String password = "Freestyle99+-";
+   
 
     String origin = "", destination = "", departure = "", arrival = "";
+    Properties props = new Properties();
+    try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+        props.load(input);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+       
 
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(url, user, password);
+        Connection conn = DriverManager.getConnection(
+        	    props.getProperty("db.url"),
+        	    props.getProperty("db.user"),
+        	    props.getProperty("db.password")
+        	);
         PreparedStatement ps = conn.prepareStatement("SELECT * FROM transitline WHERE name = ?");
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();

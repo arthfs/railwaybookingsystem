@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.io.InputStream;
+import java.util.Properties;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -44,14 +45,23 @@ public class question extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		Properties props = new Properties();
+		try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+		    props.load(input);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
 		PrintWriter out = response.getWriter();
-		String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-        String root_username = "root"; 
-        String root_password = "Freestyle99+-"; 
+		
         HttpSession session = request.getSession();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+            Connection conn = DriverManager.getConnection(
+            	    props.getProperty("db.url"),
+            	    props.getProperty("db.user"),
+            	    props.getProperty("db.password")
+            	);
             Statement st = conn.createStatement();
             ResultSet rs;
             String username = session.getAttribute("user").toString();

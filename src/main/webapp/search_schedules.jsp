@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.InputStream, java.util.Properties" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -34,15 +35,24 @@
     String travelDate = request.getParameter("travel_date");
     String sortBy = request.getParameter("sort_by");
     String viewStops = request.getParameter("view_stops");
+    
+    Properties props = new Properties();
+	try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+	    props.load(input);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+
 
     if (origin != null && destination != null && travelDate != null) {
-        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem";
-        String dbUser = "root";
-        String dbPass = "Freestyle99+-";
-
+       
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url, dbUser, dbPass);
+            Connection conn = DriverManager.getConnection(
+            	    props.getProperty("db.url"),
+            	    props.getProperty("db.user"),
+            	    props.getProperty("db.password")
+            	);
 
             String stationSql = "SELECT id FROM station WHERE id = ? OR name = ?";
             PreparedStatement psOrigin = conn.prepareStatement(stationSql);
@@ -115,7 +125,11 @@
         out.println("<h3>Stops for line: " + viewStops + "</h3>");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/railwaybookingsystem", "root", "Freestyle99+-");
+            Connection conn = DriverManager.getConnection(
+            	    props.getProperty("db.url"),
+            	    props.getProperty("db.user"),
+            	    props.getProperty("db.password")
+            	);
 
             String stopQuery = "SELECT s.name, h.arrival_time, h.departure_time FROM has_stop h JOIN station s ON h.id_station = s.id WHERE h.transitline_name = ? ORDER BY h.arrival_time";
             PreparedStatement ps = conn.prepareStatement(stopQuery);

@@ -1,18 +1,28 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.InputStream, java.util.Properties" %>
 <%
     String name = request.getParameter("name");
     String origin = request.getParameter("origin");
     String destination = request.getParameter("destination");
     String departure = request.getParameter("departure");
     String arrival = request.getParameter("arrival");
+    
+    Properties props = new Properties();
+  	try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+  	    props.load(input);
+  	} catch (Exception e) {
+  	    e.printStackTrace();
+  	}
 
-    String url = "jdbc:mysql://localhost:3306/railwaybookingsystem";
-    String user = "root";
-    String password = "Freestyle99+-";
+  
 
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(url, user, password);
+        Connection conn = DriverManager.getConnection(
+        	    props.getProperty("db.url"),
+        	    props.getProperty("db.user"),
+        	    props.getProperty("db.password")
+        	);
 
         PreparedStatement ps = conn.prepareStatement(
             "UPDATE transitline SET origin = ?, destination = ?, departure_time = ?, arrival_time = ? WHERE name = ?"

@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.io.InputStream, java.util.Properties" %>
 <html>
 <head><title>Customers by Transit Line & Date</title></head>
 <body>
@@ -13,15 +14,23 @@
 <%
     String line = request.getParameter("line");
     String date = request.getParameter("date");
+    Properties props = new Properties();
+   	try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+     	    props.load(input);
+     	} catch (Exception e) {
+     	    e.printStackTrace();
+     	}
 
     if (line != null && date != null) {
-        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem";
-        String user = "root";
-        String password = "Freestyle99+-";
+    	 
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url, user, password);
+            Connection conn = DriverManager.getConnection(
+            	    props.getProperty("db.url"),
+            	    props.getProperty("db.user"),
+            	    props.getProperty("db.password")
+            	);
 
             String query = "SELECT c.first_name, c.last_name, c.email, r.number " +
                            "FROM reservation r JOIN customer c ON r.username = c.username " +

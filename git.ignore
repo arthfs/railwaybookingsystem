@@ -1,0 +1,5 @@
+# Excludes ANY file named 'config.properties' in the project
+config.properties
+
+# Optional: Keep a template for others to copy
+!config.example.properties

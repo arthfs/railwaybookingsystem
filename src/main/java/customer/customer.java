@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.io.InputStream;
+import java.util.Properties;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -48,16 +49,24 @@ public class customer extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		Properties props = new Properties();
+		try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+		    props.load(input);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
 		PrintWriter out = response.getWriter();
 		if (request.getParameter("action").compareTo("registercustomer") == 0)
 		{
 			System.out.println("register");
 			try {
 	            Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-	            String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-	            String root_username = "root"; 
-	            String root_password = "Freestyle99+-"; 
-	            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+	            Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 	            Statement st = conn.createStatement();
 	            String firstname = request.getParameter("firstname"),lastname = request.getParameter("lastname"),birthdate = request.getParameter("birthdate"),username = request.getParameter("username"),
 	            		password = request.getParameter("password"),email = request.getParameter("email");
@@ -81,10 +90,11 @@ public class customer extends HttpServlet {
 		    try {
 		        String reservationNumber = request.getParameter("reservation_number");
 		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-		        String root_username = "root"; 
-		        String root_password = "Freestyle99+-"; 
-		        Connection conn = DriverManager.getConnection(url, root_username, root_password);
+		        Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		        
 		        // Delete the reservation
 		        PreparedStatement pst = conn.prepareStatement("DELETE FROM reservation WHERE number = ?");
@@ -111,10 +121,11 @@ public class customer extends HttpServlet {
 		    
 		    try {
 		        Class.forName("com.mysql.cj.jdbc.Driver"); 
-		        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-		        String root_username = "root"; 
-		        String root_password = "Freestyle99+-"; 
-		        conn = DriverManager.getConnection(url, root_username, root_password);
+		        conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		        st = conn.createStatement();
 		        HttpSession session = request.getSession();
 		        String username = session.getAttribute("user").toString();
@@ -271,10 +282,11 @@ public class customer extends HttpServlet {
 		if (request.getParameter("action").compareTo("insert") == 0) {
 		    try {
 		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-		        String root_username = "root"; 
-		        String root_password = "Freestyle99+-"; 
-		        Connection conn = DriverManager.getConnection(url, root_username, root_password);
+		        Connection conn = DriverManager.getConnection(
+	            	    props.getProperty("db.url"),
+	            	    props.getProperty("db.user"),
+	            	    props.getProperty("db.password")
+	            	);
 		        Statement st = conn.createStatement();
 		        HttpSession session = request.getSession();
 		        String username = session.getAttribute("user").toString();
@@ -383,15 +395,23 @@ public class customer extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		Properties props = new Properties();
+		try (InputStream input = getClass().getResourceAsStream("/config.properties")) {
+		    props.load(input);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 
-        String url = "jdbc:mysql://localhost:3306/railwaybookingsystem"; 
-        String root_username = "root"; 
-        String root_password = "Freestyle99+-"; 
+       
         HttpSession session = request.getSession();
         //String username = request.getParameter("username") , password = request.getParameter("password");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Load driver
-            Connection conn = DriverManager.getConnection(url, root_username, root_password);
+            Connection conn = DriverManager.getConnection(
+            	    props.getProperty("db.url"),
+            	    props.getProperty("db.user"),
+            	    props.getProperty("db.password")
+            	);
             Statement st = conn.createStatement();
             ResultSet rs =  st.executeQuery("select s1.id originid ,s2.id destinationid, train.id train, t1.fare base_fare,t1.name transitline ,s1.name origin, s2.name destination, t1.departure_time,h.arrival_time,subtime( h.arrival_time , t1.departure_time) travel_time\r\n"
             		+ " from (select t.*,h.id_station from transitline t join has_stop h on h.transitline_name = t.name) t1 join train on t1.name = train.transitline_name\r\n"
