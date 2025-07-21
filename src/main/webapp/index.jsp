@@ -52,7 +52,9 @@ Welcome <%=session.getAttribute("user")%>
 				
 				
 		</div>
-		
+		<div>
+			<a href='search_schedules.jsp'> Search schedules</a>
+		</div>
 		<div>
 			<form method='post' action='customer'> 
 				<input type='hidden' name = 'action' value='makereservation'>
